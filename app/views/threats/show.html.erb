@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @threat %>
+
+<div>
+  <%= link_to "Edit this threat", edit_threat_path(@threat) %> |
+  <%= link_to "Back to threats", threats_path %>
+
+  <%= button_to "Destroy this threat", @threat, method: :delete %>
+</div>

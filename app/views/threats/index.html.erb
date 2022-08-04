@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Threats</h1>
+
+<div id="threats">
+  <% @threats.each do |threat| %>
+    <%= render threat %>
+    <p>
+      <%= link_to "Show this threat", threat %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New threat", new_threat_path %>

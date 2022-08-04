@@ -1,5 +1,5 @@
-### iHeros - Teste Fullstack
-    
+### iHeroes - Teste Fullstack
+
 Este é o teste usado por nós aqui da ZRP para avaliar tecnicamente os candidatos a nossas vagas de desenvolvedores Fullstack. Se você estiver participando de um processo seletivo para nossa equipe, certamente em algum momento receberá este link, mas caso você tenha chegado aqui "por acaso", sinta-se convidado a desenvolver nosso teste e enviar uma mensagem para nós no e-mail jobs@zrp.com.br.
 
 Aqui na ZRP nós aplicamos este mesmo teste para as vagas em todos os níveis, ou seja, um candidato a uma vaga de dev júnior fará o mesmo teste de um outro candidato a uma vaga de dev sênior, mudando obviamente o nosso critério de avaliação do resultado do teste e nossa expectativa de passos entregues.
@@ -13,7 +13,7 @@ Você deverá criar um fork deste projeto, e desenvolver em cima do seu fork. **
 Lembre-se que este é um teste técnico e não um concurso público, portanto, não existe apenas uma resposta correta. Mostre que você é bom e nos impressione, mas não esqueça do objetivo do projeto.
 
 Nós não definimos um tempo limite para resolução deste teste, o que vale para nós e o resultado final e a evolução da criação do projeto até se atingir este resultado. Você deve alinhar junto com o RH **quais passos você irá implementar** e **quanto tempo você demorará para fazê-los**.
-    
+
 
 #### Descrição
 > Rede de cadastro(test backend) e distribuição (test frontend) de heroes, levando em consideração o nível da ameaça que estaria atacando uma determinada região.
@@ -54,7 +54,7 @@ Nível God, Dragon, Tiger e Wolf.
 
 Você devera consumir um socket (construído utilizando o **socket.io** que retorna as informações das ameaças, cada ameça tem o seguinte formato de objeto:
 
-``` 
+```
 {
     location: [{
         lat: -5.836597,
@@ -65,11 +65,11 @@ Você devera consumir um socket (construído utilizando o **socket.io** que reto
 }
 ```
 
-A url do serviço de socket é a: 
+A url do serviço de socket é a:
 
 `https://zrp-challenge-socket.herokuapp.com`
 
-E o evento a ser escutado é o `occurrence` 
+E o evento a ser escutado é o `occurrence`
 
 Caso queira referência de como se conectar ao websocket veja [esse link](https://socket.io/docs/client-api/).
 
@@ -79,11 +79,11 @@ Nos mostre em uma tela bonita e chamativa qual herói combateu qual ameaça e qu
 
 ##### Nível 5 - Alocações inteligentes
 
-Você pode alocar o dobro de heróis de ranking menor para lidar com uma ameaça de ranking superior caso eles estejam mais próximos que o herói devido da ameaça daquele nível. 
+Você pode alocar o dobro de heróis de ranking menor para lidar com uma ameaça de ranking superior caso eles estejam mais próximos que o herói devido da ameaça daquele nível.
 
-Ou seja, o dobro da força heroica é o suficiente para batalhar com a ameaça de nível superior. 
+Ou seja, o dobro da força heroica é o suficiente para batalhar com a ameaça de nível superior.
 
-### Tecnologias 
+### Tecnologias
 
 **Frontend**
 
