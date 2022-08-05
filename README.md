@@ -1,8 +1,8 @@
-sudo -u postgres psql
-sudo service postgresql start
+- sudo -u postgres psql
+- sudo service postgresql start
 
-cd onu_api/
-rails s
+- cd onu_api/
+- rails s
 
-cd onu_painel/
-npm start
+- cd onu_painel/
+- npm start
