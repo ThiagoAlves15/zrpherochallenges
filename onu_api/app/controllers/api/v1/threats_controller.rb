@@ -1,4 +1,4 @@
-class Api::V1::ThreatsController < ApplicationController
+class Api::V1::ThreatsController < ApiController
   before_action :set_threat, only: %i[ show update destroy ]
 
   # GET /threats
