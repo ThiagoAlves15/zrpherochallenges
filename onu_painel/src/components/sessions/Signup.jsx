@@ -1,25 +1,29 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import Button from '@mui/material/Button';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputAdornment from '@mui/material/InputAdornment';
-import IconButton from '@mui/material/IconButton';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import Container from '@mui/material/Container';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import Alert from '@mui/material/Alert';
-import FormGroup from '@mui/material/FormGroup';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import Input from '@mui/material/Input';
-import Divider from '@mui/material/Divider';
-import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
+import { Link, useNavigate } from 'react-router-dom';
+import {
+  Alert,
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Container,
+  Divider,
+  FormControl,
+  FormGroup,
+  IconButton,
+  Input,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  Typography
+} from '@mui/material';
+import {
+  Visibility,
+  VisibilityOff
+} from '@mui/icons-material';
+import signUpUser from './sessionSlice';
 
 function Signup() {
   const emailRef = useRef();
@@ -38,7 +42,7 @@ function Signup() {
     if (errorMessages.length > 0) {
       setErrors(errorMessages);
       errorMessages = [];
-      // dispatchEvent(resetErrorState());
+      // dispatch(resetErrorState());
     }
   });
 
@@ -65,8 +69,8 @@ function Signup() {
       password: passwordRef.current.value,
     };
 
-    // const response = await dispatchEvent(signupUser(payload));
-    const response = ["Oopss, i did it again"]
+    const response = await dispatch(signUpUser(payload));
+    console.log(response);
 
     if (errorMessages.length === 0) {
       navigate("/");
@@ -176,7 +180,7 @@ function Signup() {
           <CardActions sx={{marginTop: '1em', justifyContent: 'center'}} disableSpacing >
             <Box>
               <Typography variant="body2" color="text.secondary" align="center">
-                Already have an account? <Link href="/login">Login!</Link>
+                Already have an account? <Link to="/login">Login!</Link>
               </Typography>
             </Box>
           </CardActions>
