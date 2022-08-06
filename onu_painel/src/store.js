@@ -1,8 +1,19 @@
 import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from './features/counter/counterSlice';
+import sessionReducer from './components/sessions/sessionSlice'
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    session: sessionReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        // Ignore these action types
+        ignoredActions: ['your/action/type'],
+        // Ignore these field paths in all actions
+        ignoredActionPaths: ['meta.arg', 'payload.timestamp'],
+        // Ignore these paths in the state
+        ignoredPaths: ['items.dates'],
+      },
+    }),
 });

@@ -6,6 +6,8 @@ namespace :api do
 
     resources :heroes
     resources :threats
+
+    get '/users/me', to: 'users#me'
   end
 end
 
