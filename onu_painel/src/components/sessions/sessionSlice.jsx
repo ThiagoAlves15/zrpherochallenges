@@ -136,8 +136,8 @@ function getRefreshToken() {
   return localStorage.getItem('refresToken');
 }
 
-function storeRefreshToken() {
-  localStorage.setItem('refresToken');
+function storeRefreshToken(token) {
+  localStorage.setItem('refresToken', token);
 }
 
 function removeRefreshToken() {

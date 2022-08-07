@@ -23,7 +23,7 @@ import {
   Visibility,
   VisibilityOff
 } from '@mui/icons-material';
-import signUpUser from './sessionSlice';
+import { signUpUser } from './sessionSlice';
 
 function Signup() {
   const emailRef = useRef();

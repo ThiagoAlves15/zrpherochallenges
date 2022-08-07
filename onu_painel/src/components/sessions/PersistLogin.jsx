@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import refreshAccessToken from './sessionSlice';
+import { refreshAccessToken } from './sessionSlice';
 
 function PersistLogin() {
   const loading = useSelector((state) => state.session.loading);
