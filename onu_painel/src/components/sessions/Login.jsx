@@ -60,8 +60,7 @@ function Login() {
       password: passwordRef.current.value,
     }
 
-    // const response = await dispatch(loginUser(payload));
-    const response = ["Oopss, i did it again"]
+    const response = await dispatch(loginUser(payload));
 
     if (errorMessages.length === 0) {
       navigate("/");
@@ -90,7 +89,7 @@ function Login() {
 
   return (
     <section>
-      <Container maxWidth="md">
+      <Container maxWidth="md" sx={{marginTop: '1em'}}>
         <Card sx={{boxShadow: 1, maxWidth: 'md'}}>
           <CardContent>
             <Container maxWidth="sm">

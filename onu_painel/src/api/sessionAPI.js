@@ -24,6 +24,22 @@ export async function createUserWithEmailAndPassword(email, password) {
     });
 }
 
+export async function logoutUserWithToken(token) {
+  const data = {
+    token: token,
+    client_id: CLIENT_ID,
+    client_secret: CLIENT_SECRET,
+  };
+
+  return axios.post(LOGOUT_URL, data)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      return error.response.data;
+    });
+}
+
 export async function requestAccessTokenWithRefreshToken(refreshToken) {
   const data = {
     grant_type: 'refresh_token',

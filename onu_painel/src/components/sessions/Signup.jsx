@@ -117,7 +117,7 @@ function Signup() {
 
   return (
     <section>
-      <Container maxWidth="md">
+      <Container maxWidth="md" sx={{marginTop: '1em'}}>
         <Card sx={{boxShadow: 1, maxWidth: 'md'}}>
           <CardContent>
             <Container maxWidth="sm">

@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
   createUserWithEmailAndPassword,
+  logoutUserWithToken,
   getCurrentUser,
   requestAccessTokenWithRefreshToken
 } from '../../api/sessionAPI';
@@ -37,6 +38,19 @@ export const signUpUser = createAsyncThunk(
   }
 );
 
+export const logoutUser = createAsyncThunk(
+  'session/logoutUser',
+  async (payload, { rejectWithValue }) => {
+    const response = await logoutUserWithToken(payload);
+
+    if (response.error) {
+      return rejectWithValue(response);
+    }
+
+    return response;
+  }
+);
+
 export const refreshAccessToken = createAsyncThunk(
   'session/refreshAccessToken',
   async (refreshToken, { rejectWithValue }) => {
@@ -52,7 +66,7 @@ export const refreshAccessToken = createAsyncThunk(
       return rejectWithValue(refreshResponse.data);
     }
 
-    const userResponse = await getCurrentUser(refreshResponse.acess_token);
+    const userResponse = await getCurrentUser(refreshResponse.access_token);
 
     if (userResponse.error) {
       return rejectWithValue(userResponse.data);
@@ -79,7 +93,7 @@ export const sessionSlice = createSlice({
         state.errorMessages = [];
       })
       .addCase(signUpUser.fulfilled, (state, action) => {
-        state.accessToken = action.payload.acess_token;
+        state.accessToken = action.payload.access_token;
         state.refreshToken = action.payload.refresh_token;
         state.expiresIn = action.payload.expires_in;
         state.tokenType = action.payload.token_type;
@@ -102,13 +116,42 @@ export const sessionSlice = createSlice({
         state.error = true;
         state.errorMessages = action.payload.errors;
       })
+      .addCase(logoutUser.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+        state.errorMessages = [];
+      })
+      .addCase(logoutUser.fulfilled, (state, action) => {
+        state.accessToken = undefined;
+        state.refreshToken = undefined;
+        state.expiresIn = undefined;
+        state.tokenType = undefined;
+
+        state.currentUser = {
+          id: undefined,
+          email: undefined,
+          role: undefined,
+          createdAt: undefined,
+        };
+
+        removeRefreshToken();
+
+        state.loading = false;
+        state.error = false;
+        state.errorMessages = [];
+      })
+      .addCase(logoutUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = true;
+        state.errorMessages = [action.payload.error];
+      })
       .addCase(refreshAccessToken.pending, (state) => {
         state.loading = true;
         state.error = false;
         state.errorMessages = [];
       })
       .addCase(refreshAccessToken.fulfilled, (state, action) => {
-        state.accessToken = action.payload.acess_token;
+        state.accessToken = action.payload.access_token;
         state.refreshToken = action.payload.refresh_token;
         state.expiresIn = action.payload.expires_in;
 
