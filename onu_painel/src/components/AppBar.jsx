@@ -46,10 +46,16 @@ const ResponsiveAppBar = () => {
     navigate(route);
   }
 
-  function handleLogut(event) {
+  function handleLogout(event) {
     event?.preventDefault();
     handleCloseUserMenu();
     navigate('/logout');
+  }
+
+  function handleProfile(event) {
+    event?.preventDefault();
+    handleCloseUserMenu();
+    navigate('/profile');
   }
 
   let sessionLinks;
@@ -82,8 +88,8 @@ const ResponsiveAppBar = () => {
           open={Boolean(anchorElUser)}
           onClose={handleCloseUserMenu}
         >
-          <MenuItem onClick={(event) => handleUpdateProfileAccount(event)}>
-            <Typography textAlign="center">Update Profile</Typography>
+          <MenuItem onClick={(event) => handleProfile(event)}>
+            <Typography textAlign="center">Profile</Typography>
           </MenuItem>
 
           <MenuItem onClick={(event) => handleLogout(event)}>
@@ -120,7 +126,7 @@ const ResponsiveAppBar = () => {
             component="div"
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
           >
-            WishList
+            ONU Threat Painel
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -165,7 +171,7 @@ const ResponsiveAppBar = () => {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
           >
-            Wishlist
+            ONU Threat Painel
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               <Button

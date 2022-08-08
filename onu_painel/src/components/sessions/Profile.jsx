@@ -3,15 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Alert,
-  Box,
   Button,
   Card,
-  CardActions,
   CardContent,
   Container,
-  Divider,
   FormControl,
   FormGroup,
+  FormHelperText,
   IconButton,
   Input,
   InputAdornment,
@@ -23,15 +21,19 @@ import {
   Visibility,
   VisibilityOff
 } from '@mui/icons-material';
-import { signUpUser, resetErrorState } from './sessionSlice';
+import { updateProfile, resetErrorState } from './sessionSlice';
 
-function Signup() {
+function Profile() {
   const emailRef = useRef();
+  const newEmailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmationRef = useRef();
+  const currentPasswordRef = useRef();
+  const accessToken = useSelector((state) => state.session.accessToken);
   const errorMessages = useSelector((state) => state.session.errorMessages);
   const [errors, setErrors] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const loading = false;
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -48,27 +50,42 @@ function Signup() {
   async function handleSubmit(event) {
     event.preventDefault();
     setErrors([]);
+    const shouldUpdateEmail = emailRef?.current !== undefined && emailRef?.current?.value !== "";
+    const shouldUpdatePassword = passwordRef?.current !== undefined && passwordRef?.current?.value !== "";
+    const shouldUpdateProfile = shouldUpdateEmail || shouldUpdatePassword;
 
-    if (emailRef?.current === undefined
-        || emailRef.current.value === ""
-        || passwordRef?.current === undefined
-        || passwordRef.current.value === ""
-        || passwordConfirmationRef?.current === undefined
-        || passwordConfirmationRef.current.value === ""
-    ) {
-      return setErrors(["Please fill out all fields"]);
+    if (!shouldUpdateProfile) {
+      return setErrors(["Please fill fields for change"]);
     }
 
-    if (passwordRef.current.value !== passwordConfirmationRef.current.value) {
-      return setErrors(["Passwords do not match"]);
+    if (shouldUpdateEmail) {
+      if (emailRef.current.value !== newEmailRef.current.value) {
+        setErrors(errors => [...errors, "Emails do not match"]);
+      }
+    }
+
+    if (shouldUpdatePassword) {
+      if (passwordRef.current.value !== passwordConfirmationRef.current.value) {
+        setErrors(errors => [...errors, "Passwords do not match"]);
+      }
+    }
+
+    if (currentPasswordRef?.current?.value === undefined || currentPasswordRef.current.value === "") {
+      setErrors(errors => [...errors, "Please enter your current password to confirm changes"]);
+    }
+
+    if (errors.length > 0) {
+      return errors;
     }
 
     const payload = {
-      email: emailRef.current.value,
-      password: passwordRef.current.value,
+      email: emailRef?.current?.value,
+      password: passwordRef?.current?.value,
+      currentPassword: currentPasswordRef.current.value,
+      accessToken: accessToken
     };
 
-    const response = await dispatch(signUpUser(payload));
+    const response = await dispatch(updateProfile(payload));
     console.log(response);
 
     if (errorMessages.length > 0) {
@@ -114,6 +131,24 @@ function Signup() {
         </InputAdornment>
     } />;
 
+  const currentPasswordInput =
+    <OutlinedInput
+      id="current-password"
+      type={showCurrentPassword ? 'text' : 'password'}
+      inputRef={currentPasswordRef}
+      endAdornment={
+        <InputAdornment position="end">
+          <IconButton
+            aria-label="toggle current password visibility"
+            onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+            onMouseDown={() => setShowCurrentPassword(!showCurrentPassword)}
+            edge="end"
+          >
+            { showCurrentPassword ? <Visibility /> : <VisibilityOff /> }
+          </IconButton>
+        </InputAdornment>
+    } />;
+
   return (
     <section>
       <Container maxWidth="md" sx={{marginTop: '1em'}}>
@@ -121,7 +156,7 @@ function Signup() {
           <CardContent>
             <Container maxWidth="sm">
               <Typography variant="h2" color="text.primary" gutterBottom>
-                Create account
+                Profile
               </Typography>
 
               {
@@ -138,22 +173,42 @@ function Signup() {
               <form onSubmit={handleSubmit}>
                 <FormGroup row={true} id="email-group" sx={{marginTop: '1em'}}>
                   <FormControl fullWidth>
-                    <InputLabel required htmlFor="email" id="email-label">Email Address</InputLabel>
+                    <InputLabel htmlFor="email" id="email-label">Email address</InputLabel>
                     <Input id="email" type="email" inputRef={emailRef} />
+                  </FormControl>
+                </FormGroup>
+
+                <FormGroup row={true} id="new-email-group" sx={{marginTop: '1em'}}>
+                  <FormControl fullWidth>
+                    <InputLabel htmlFor="email" id="new-email-label">Change email</InputLabel>
+                    <Input id="new-email" type="email" inputRef={newEmailRef} />
+                    <FormHelperText id="new-email-helper-text">
+                      Leave blank if you wish to not change your email
+                    </FormHelperText>
                   </FormControl>
                 </FormGroup>
 
                 <FormGroup row={true} id="password-group" sx={{marginTop: '1em'}}>
                   <FormControl fullWidth>
-                    <InputLabel required htmlFor="password" id="password-label">Password</InputLabel>
+                    <InputLabel htmlFor="password" id="password-label">New Password</InputLabel>
                     { passwordInput }
                   </FormControl>
                 </FormGroup>
 
                 <FormGroup row={true} id="password-confirmation-group" sx={{marginTop: '1em'}}>
                   <FormControl fullWidth>
-                    <InputLabel required htmlFor="password-confirmation" id="password-confirmation-label">Password Confirmation</InputLabel>
+                    <InputLabel htmlFor="password-confirmation" id="password-confirmation-label">New Password confirmation</InputLabel>
                     { passwordConfirmationInput }
+                    <FormHelperText id="new-email-helper-text">
+                      Leave blank if you wish to not change your password
+                    </FormHelperText>
+                  </FormControl>
+                </FormGroup>
+
+                <FormGroup row={true} id="current-password-group" sx={{marginTop: '1em'}}>
+                  <FormControl fullWidth>
+                    <InputLabel required htmlFor="current-password" id="current-password-label">Current Password</InputLabel>
+                    { currentPasswordInput }
                   </FormControl>
                 </FormGroup>
 
@@ -166,27 +221,17 @@ function Signup() {
                       type="submit"
                       id="submit-button"
                     >
-                      Signup
+                      Update account info
                     </Button>
                   </FormControl>
                 </FormGroup>
               </form>
             </Container>
           </CardContent>
-
-          <Divider light={false} />
-
-          <CardActions sx={{marginTop: '1em', justifyContent: 'center'}} disableSpacing >
-            <Box>
-              <Typography variant="body2" color="text.secondary" align="center">
-                Already have an account? <Link to="/login">Login!</Link>
-              </Typography>
-            </Box>
-          </CardActions>
         </Card>
       </Container>
     </section>
   )
 }
 
-export default Signup;
+export default Profile;

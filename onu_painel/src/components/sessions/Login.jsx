@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Alert,
@@ -23,11 +23,12 @@ import {
   Visibility,
   VisibilityOff
 } from '@mui/icons-material';
+import { loginUser, resetErrorState } from './sessionSlice';
 
 function Login() {
   const emailRef = useRef();
   const passwordRef = useRef();
-  let errorMessages = [];
+  const errorMessages = useSelector((state) => state.session.errorMessages);
   const [errors, setErrors] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
   const loading = false;
@@ -39,10 +40,9 @@ function Login() {
 
     if (errorMessages.length > 0) {
       setErrors(errorMessages);
-      errorMessages = [];
-      // dispatch(resetErrorState());
+      dispatch(resetErrorState());
     }
-  });
+  }, []);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -61,8 +61,9 @@ function Login() {
     }
 
     const response = await dispatch(loginUser(payload));
+    console.log(response);
 
-    if (errorMessages.length === 0) {
+    if (errorMessages.length > 0) {
       navigate("/");
     } else {
       return setErrors(errorMessages);
@@ -77,7 +78,7 @@ function Login() {
       endAdornment={
         <InputAdornment position="end">
           <IconButton
-            aria-label="toggle password visiility"
+            aria-label="toggle password visibility"
             onClick={() => setShowPassword(!showPassword)}
             onMouseDown={() => setShowPassword(!showPassword)}
             edge="end"

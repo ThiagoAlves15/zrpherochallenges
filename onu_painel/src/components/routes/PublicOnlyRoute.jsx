@@ -7,7 +7,7 @@ function PublicOnlyRoute({ children }) {
   const accessToken = useSelector((state) => state.session.accessToken);
   const location = useLocation();
   const fromLocation = (location.state)?.from;
-  const previousLocation = location.state ? fromLocation : { pathname: '/login' };
+  const previousLocation = location.state ? fromLocation : { pathname: '/' };
 
   if (!accessToken && !loading) {
     return children;

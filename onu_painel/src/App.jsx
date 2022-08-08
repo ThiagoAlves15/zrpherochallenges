@@ -4,8 +4,8 @@ import PersistLogin from './components/sessions/PersistLogin';
 import Login from './components/sessions/Login';
 import Logout from './components/sessions/Logout';
 import Signup from './components/sessions/Signup';
-import UpdateProfile from './components/sessions/UpdateProfile';
-import OnuBoard from './components/dashboards/OnuBoard';
+import Profile from './components/sessions/Profile';
+import OnuBoard from './components/OnuBoard';
 import PrivateRoute from './components/routes/PrivateRoute';
 import PublicOnlyRoute from './components/routes/PublicOnlyRoute';
 import AppBar from './components/AppBar';
@@ -40,10 +40,10 @@ function App() {
               />
 
               <Route
-                path="/update-profile"
+                path="/profile"
                 element={
                   <PrivateRoute>
-                    <UpdateProfile />
+                    <Profile />
                   </PrivateRoute>
                 }
               />
