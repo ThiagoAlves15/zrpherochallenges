@@ -18,7 +18,7 @@ class Api::V1::ThreatsController < ApiController
     @threat = Threat.new(threat_params)
 
     if @threat.save
-      render json: @threat, status: :created, location: @threat
+      render json: @threat, status: :created
     else
       render json: @threat.errors, status: :unprocessable_entity
     end

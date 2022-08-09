@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchHeroes } from './heroSlice';
 import Hero from './Hero';
+import HeroForm from './HeroForm';
 
 function HeroBoard() {
   const heroes = useSelector((state) => state.heroes.heroes);
@@ -16,6 +17,10 @@ function HeroBoard() {
   return (
     <div>
       <h1>HeroBoard</h1>
+
+      <div>
+        <HeroForm />
+      </div>
 
       <div>
         {

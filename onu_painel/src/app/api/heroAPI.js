@@ -16,3 +16,26 @@ export async function fetchAllHeroes(accessToken) {
       return error.response.data;
     });
 }
+
+export async function createNewHero(payload) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${payload.accessToken}`,
+    },
+  };
+
+  const data = {
+    name: payload.name,
+    rank: payload.rank,
+    latitude: payload.latitude,
+    longitude: payload.longitude
+  }
+
+  return axios.post(HEROES_URL, data, config)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      return error.response.data;
+    });
+}

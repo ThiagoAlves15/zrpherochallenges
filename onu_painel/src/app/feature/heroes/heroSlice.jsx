@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import produce from 'immer';
 import {
-  fetchAllHeroes
+  fetchAllHeroes,
+  createNewHero
 } from '../../api/heroAPI';
 
 const initialState = {
@@ -37,7 +37,7 @@ export const fetchHeroes = createAsyncThunk(
 export const createHero = createAsyncThunk(
   'heroes/createHero',
   async (payload, { rejectWithValue }) => {
-    const response = await fetchAllHeroes(payload.accessToken);
+    const response = await createNewHero(payload);
 
     if (response.errors) {
       return rejectWithValue(response.errors);
@@ -59,30 +59,40 @@ export const heroSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchHeroes.pending, (state) => {
-        return produce(state, (draft) => {
-          draft.loading = true;
-          draft.error = false;
-          draft.errorMessages = [];
-        })
+        state.loading = true;
+        state.error = false;
+        state.errorMessages = [];
       })
       .addCase(fetchHeroes.fulfilled, (state, action) => {
-        return produce(state, (draft) => {
-          draft.heroes = action.payload;
-          draft.loading = false;
-          draft.error = false;
-          draft.errorMessages = [];
-        })
+        state.heroes = action.payload;
+        state.loading = false;
+        state.error = false;
+        state.errorMessages = [];
       })
       .addCase(fetchHeroes.rejected, (state, action) => {
-        return produce(state, (draft) => {
-          draft.loading = false;
-          draft.error = true;
-          draft.errorMessages = action.payload;
-        })
+        state.loading = false;
+        state.error = true;
+        state.errorMessages = action.payload;
+      })
+      .addCase(createHero.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+        state.errorMessages = [];
+      })
+      .addCase(createHero.fulfilled, (state, action) => {
+        state.heroes.push(action.payload);
+        state.loading = false;
+        state.error = false;
+        state.errorMessages = [];
+      })
+      .addCase(createHero.rejected, (state, action) => {
+        state.loading = false;
+        state.error = true;
+        state.errorMessages = action.payload;
       });
   },
 });
 
-export const {  } = heroSlice.actions;
+export const { resetErrorState } = heroSlice.actions;
 
 export default heroSlice.reducer;

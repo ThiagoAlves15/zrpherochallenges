@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -32,14 +32,15 @@ function FormHero() {
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
 
-  const errorMessages = useSelector((state) => state.session.errorMessages);
+  const accessToken = useSelector((state) => state.session.accessToken);
+  const errorMessages = useSelector((state) => state.heroes.errorMessages);
   const [errors, setErrors] = useState([]);
   const loading = false;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    emailRef?.current?.focus();
+    nameRef?.current?.focus();
 
     if (errorMessages.length > 0) {
       setErrors(errorMessages);
@@ -67,7 +68,8 @@ function FormHero() {
       name: nameRef.current.value,
       rank: rankRef.current.value,
       latitude: latitudeRef.current.value,
-      longitude: longitudeRef.current.value
+      longitude: longitudeRef.current.value,
+      accessToken: accessToken
     };
 
     const response = await dispatch(createHero(payload));
