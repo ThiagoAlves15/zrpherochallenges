@@ -35,7 +35,13 @@ class Api::V1::HeroesController < ApiController
 
   # DELETE /heroes/1
   def destroy
-    @hero.destroy
+    if @hero.destroy
+      @heroes = Hero.all
+
+      render json: @heroes
+    else
+      render json: @hero.errors, status: :unprocessable_entity
+    end
   end
 
   private

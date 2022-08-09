@@ -39,3 +39,46 @@ export async function createNewHero(payload) {
       return error.response.data;
     });
 }
+
+export async function updateHeroById(payload) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${payload.accessToken}`,
+    },
+  };
+
+  const data = {
+    name: payload.name,
+    rank: payload.rank,
+    latitude: payload.latitude,
+    longitude: payload.longitude
+  }
+
+  const updateUrl = `${HEROES_URL}/${payload.id}`
+
+  return axios.patch(updateUrl, data, config)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      return error.response.data;
+    });
+}
+
+export async function deleteHeroById(payload) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${payload.accessToken}`,
+    },
+  };
+
+  const deleteUrl = `${HEROES_URL}/${payload.heroId}`
+
+  return axios.delete(deleteUrl, config)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      return error.response.data;
+    });
+}

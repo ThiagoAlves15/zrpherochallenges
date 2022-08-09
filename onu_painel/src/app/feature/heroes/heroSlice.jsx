@@ -1,7 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
   fetchAllHeroes,
-  createNewHero
+  createNewHero,
+  updateHeroById,
+  deleteHeroById
 } from '../../api/heroAPI';
 
 const initialState = {
@@ -38,6 +40,32 @@ export const createHero = createAsyncThunk(
   'heroes/createHero',
   async (payload, { rejectWithValue }) => {
     const response = await createNewHero(payload);
+
+    if (response.errors) {
+      return rejectWithValue(response.errors);
+    }
+
+    return response;
+  }
+);
+
+export const updateHero = createAsyncThunk(
+  'heroes/updateHero',
+  async (payload, { rejectWithValue }) => {
+    const response = await updateHeroById(payload);
+
+    if (response.errors) {
+      return rejectWithValue(response.errors);
+    }
+
+    return response;
+  }
+);
+
+export const deleteHero = createAsyncThunk(
+  'heroes/deleteHero',
+  async (payload, { rejectWithValue }) => {
+    const response = await deleteHeroById(payload);
 
     if (response.errors) {
       return rejectWithValue(response.errors);
@@ -86,6 +114,40 @@ export const heroSlice = createSlice({
         state.errorMessages = [];
       })
       .addCase(createHero.rejected, (state, action) => {
+        state.loading = false;
+        state.error = true;
+        state.errorMessages = action.payload;
+      })
+      .addCase(updateHero.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+        state.errorMessages = [];
+      })
+      .addCase(updateHero.fulfilled, (state, action) => {
+        const index = state.heroes.findIndex(hero => hero.id === action.payload.id);
+        state.heroes[index] = action.payload;
+
+        state.loading = false;
+        state.error = false;
+        state.errorMessages = [];
+      })
+      .addCase(updateHero.rejected, (state, action) => {
+        state.loading = false;
+        state.error = true;
+        state.errorMessages = action.payload;
+      })
+      .addCase(deleteHero.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+        state.errorMessages = [];
+      })
+      .addCase(deleteHero.fulfilled, (state, action) => {
+        state.heroes = action.payload;
+        state.loading = false;
+        state.error = false;
+        state.errorMessages = [];
+      })
+      .addCase(deleteHero.rejected, (state, action) => {
         state.loading = false;
         state.error = true;
         state.errorMessages = action.payload;
