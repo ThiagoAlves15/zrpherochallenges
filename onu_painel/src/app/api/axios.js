@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { REACT_APP_BACKEND_URL } from './consts';
 
 const instance = axios.create({
-  baseURL: process.env.REACT_APP_BACKEND_URL,
+  baseURL: REACT_APP_BACKEND_URL,
   headers: {
     'Content-Type': 'application/json',
     withCreadentials: true,

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,7 +11,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -19,8 +18,8 @@ const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const ResponsiveAppBar = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
   const navigate = useNavigate();
   const currentUser = useSelector((state) => state.session.currentUser);
   const accessToken = useSelector((state) => state.session.accessToken);
@@ -140,6 +139,7 @@ const ResponsiveAppBar = () => {
             >
               <MenuIcon />
             </IconButton>
+
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
@@ -165,6 +165,7 @@ const ResponsiveAppBar = () => {
               ))}
             </Menu>
           </Box>
+
           <Typography
             variant="h6"
             noWrap
@@ -173,6 +174,7 @@ const ResponsiveAppBar = () => {
           >
             ONU Threat Painel
           </Typography>
+
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               <Button
                 onClick={(event) => handleNavigate("/", event)}
@@ -181,6 +183,7 @@ const ResponsiveAppBar = () => {
                 Home
               </Button>
           </Box>
+
           {sessionLinks}
         </Toolbar>
       </Container>

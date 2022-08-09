@@ -1,13 +1,13 @@
 import axios from './axios';
-
-const LOGIN_URL = '/oauth/token';
-const LOGOUT_URL = '/oauth/revoke';
-const SIGNUP_URL = '/users';
-const UPDATE_PROFILE_URL = '/users';
-const CURRENT_USER_URL = '/users/me';
-
-const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
-const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET;
+import {
+  LOGIN_URL,
+  LOGOUT_URL,
+  SIGNUP_URL,
+  UPDATE_PROFILE_URL,
+  CURRENT_USER_URL,
+  CLIENT_ID,
+  CLIENT_SECRET
+} from './consts.js'
 
 export async function createUserWithEmailAndPassword(email, password) {
   const data = {
