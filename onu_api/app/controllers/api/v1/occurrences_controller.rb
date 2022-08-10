@@ -1,18 +1,13 @@
 module Api
   module V1
-    class OccurrencesController < ApplicationController
-      before_action :set_occurrence, only: %i[ show update destroy ]
+    class OccurrencesController < ApiController
+      before_action :set_occurrence, only: %i[ update ]
 
       # GET /occurrences
       def index
         @occurrences = Occurrence.all
 
-        render json: @occurrences
-      end
-
-      # GET /occurrences/1
-      def show
-        render json: @occurrence
+        render json: @occurrences, include: [:hero, :threat]
       end
 
       # POST /occurrences
@@ -33,11 +28,6 @@ module Api
         else
           render json: @occurrence.errors, status: :unprocessable_entity
         end
-      end
-
-      # DELETE /occurrences/1
-      def destroy
-        @occurrence.destroy
       end
 
       private

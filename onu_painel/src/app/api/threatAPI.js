@@ -31,6 +31,8 @@ export async function createNewThreat(payload) {
     longitude: payload.longitude
   }
 
+  console.log(config);
+
   return axios.post(THREATS_URL, data, config)
     .then((response) => {
       return response.data;

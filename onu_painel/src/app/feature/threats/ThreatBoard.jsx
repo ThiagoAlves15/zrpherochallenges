@@ -81,7 +81,7 @@ function ThreatBoard() {
           <Collapse in={successMessage !== ""}>
             <Alert
               severity="success"
-              sx={{ boxShadow: 1, mt: 4, mb: 4 }}
+              sx={{ boxShadow: 1, mt: '1em', mb: '1em' }}
               onClose={() => setSuccessMessage("")}
             >
               { successMessage }
@@ -93,7 +93,7 @@ function ThreatBoard() {
         <Collapse in={errors.length > 0}>
           <Alert
             severity="error"
-            sx={{ boxShadow: 1, mt: 4, mb: 4 }}
+            sx={{ boxShadow: 1, mt: '1em', mb: '1em' }}
             aria-live="assertive"
             onClose={() => setErrors([])}
           >

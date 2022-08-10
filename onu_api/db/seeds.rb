@@ -12,10 +12,12 @@ end
 
 User.first_or_create(email: "onu_admin@onu.com.br", password: "baldhead", password_confirmation: "baldhead", role: User.roles[:admin])
 
-Hero.first_or_create(name: "Saitama", rank: "B", latitude: -5.836597, longitude: -35.236007)
+saitama = Hero.first_or_create(name: "Saitama", rank: "B", latitude: -5.836597, longitude: -35.236007)
 Hero.first_or_create(name: "Andros", rank: "S", latitude: -23.2238011, longitude: -45.8944638)
 Hero.first_or_create(name: "Samurai X", rank: "A", latitude: 21.9932059, longitude: 13.6643163)
 
-Threat.first_or_create(name: "Lain", tier: "God", latitude: -5.836597, longitude: -35.236007)
+lain = Threat.first_or_create(name: "Lain", tier: "God", latitude: -5.836597, longitude: -35.236007)
 Threat.first_or_create(name: "Ponyo", tier: "Tiger", latitude: -23.2238011, longitude: -45.8944638)
 Threat.first_or_create(name: "Blue eyes dragon", tier: "Dragon", latitude: 21.9932059, longitude: 13.6643163)
+
+Occurrence.first_or_create(hero: saitama, threat: lain, resolved: true)

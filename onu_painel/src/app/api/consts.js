@@ -2,7 +2,7 @@ export const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 export const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 export const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET;
 
-export const OCURRENCES_URL = 'https://zrp-challenge-socket.herokuapp.com';
+export const NEW_THREAT_URL = 'https://zrp-challenge-socket.herokuapp.com';
 
 export const HEROES_URL = '/heroes';
 export const THREATS_URL = '/threats';

@@ -1,17 +1,16 @@
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import PersistLogin from './feature/sessions/PersistLogin';
-import OccurrencePolling from './feature/OccurrencePolling';
 import Login from './feature/sessions/Login';
 import Logout from './feature/sessions/Logout';
 import Signup from './feature/sessions/Signup';
 import Profile from './feature/sessions/Profile';
-import OnuBoard from './feature/OnuBoard';
+import OnuBoard from './feature/occurrences/OnuBoard';
 import HeroBoard from './feature/heroes/HeroBoard';
 import ThreatBoard from './feature/threats/ThreatBoard';
 import PrivateRoute from './feature/routes/PrivateRoute';
 import PublicOnlyRoute from './feature/routes/PublicOnlyRoute';
-import AppBar from './feature/AppBar';
+import AppBar from './components/AppBar';
 import { Card, CardContent, Container } from '@mui/material';
 
 function App() {
@@ -23,11 +22,9 @@ function App() {
         </header>
 
         <Container>
-          <Card sx={{ boxShadow: 1, mt: 4, mb: 4 }}>
+          <Card sx={{ boxShadow: 1, mt: '1em', mb: '1em' }}>
             <CardContent>
               <main>
-                <OccurrencePolling />
-
                 <Routes>
                   <Route element={<PersistLogin />}>
                     <Route

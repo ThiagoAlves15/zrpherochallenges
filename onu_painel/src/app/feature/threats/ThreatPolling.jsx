@@ -1,36 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
-import { OCURRENCES_URL } from '../api/consts';
-import { createThreat } from './threats/threatSlice';
-import { useSelector } from 'react-redux';
+import { NEW_THREAT_URL } from '../../api/consts';
+import { createThreat } from './threatSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
-function OccurrencePolling() {
-  const socket = io(OCURRENCES_URL);
+function ThreatPolling() {
+  const socket = io(NEW_THREAT_URL);
   const [isConnected, setIsConnected] = useState(socket.connected);
   const accessToken = useSelector((state) => state.session.accessToken);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     socket.on('connect', () => {
       setIsConnected(true);
+
+      socket.on('occurrence', (data) => {
+        console.log(data);
+        // handleIncomingThreat(data);
+      });
     });
 
-    socket.on('disconnect', (reason) => {
+    socket.on('disconnect', () => {
       setIsConnected(false);
-    });
-
-    socket.on('occurrence', data => {
-      console.log(data);
-      // handleThreat(data)
     });
 
     return () => {
       socket.off('connect');
-      socket.off('disconnect');
       socket.off('ocurrence');
+      socket.off('disconnect');
     };
   }, []);
 
-  async function handleThreat(data) {
+  async function handleIncomingThreat(data) {
     const payload = {
       name: data.monsterName,
       tier: data.dangerLevel,
@@ -38,6 +39,8 @@ function OccurrencePolling() {
       longitude: data.location[0].lng,
       accessToken: accessToken
     };
+
+    console.log(payload);
 
     const response = await dispatch(createThreat(payload));
     console.log(response);
@@ -48,4 +51,4 @@ function OccurrencePolling() {
   );
 }
 
-export default OccurrencePolling;
+export default ThreatPolling;
