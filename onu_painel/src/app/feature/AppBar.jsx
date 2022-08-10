@@ -1,21 +1,19 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+import MenuIcon from '@mui/icons-material/Menu';
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -62,7 +60,13 @@ const ResponsiveAppBar = () => {
     sessionLinks =
       <Box sx={{ flexGrow: 0 }}>
         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-          <Typography marginRight={2} marginTop={1} textAlign="center">{currentUser?.email}</Typography>
+          <Typography
+            marginRight={2}
+            marginTop={1}
+            textAlign="center"
+          >
+            {currentUser?.email}
+          </Typography>
 
           <Tooltip title="Open settings">
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -125,7 +129,7 @@ const ResponsiveAppBar = () => {
             component="div"
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
           >
-            ONU Threat Painel
+            ONU Occurrence Painel
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -158,30 +162,65 @@ const ResponsiveAppBar = () => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem onClick={handleCloseNavMenu}>
+                <Button
+                  onClick={(event) => handleNavigate("/", event)}
+                  sx={{ color: 'black', display: 'block' }}
+                >
+                  <Typography textAlign="center">Onu Board</Typography>
+                </Button>
+              </MenuItem>
+
+              <MenuItem onClick={handleCloseNavMenu}>
+                <Button
+                  onClick={(event) => handleNavigate("/heroes", event)}
+                  sx={{ color: 'black', display: 'block' }}
+                >
+                  <Typography textAlign="center">Heroes</Typography>
+                </Button>
+              </MenuItem>
+
+              <MenuItem onClick={handleCloseNavMenu}>
+                <Button
+                  onClick={(event) => handleNavigate("/threats", event)}
+                  sx={{ color: 'black', display: 'block' }}
+                >
+                  <Typography textAlign="center">Threats</Typography>
+                </Button>
+              </MenuItem>
             </Menu>
           </Box>
 
           <Typography
             variant="h6"
-            noWrap
+            noWrap={false}
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
           >
-            ONU Threat Painel
+            ONU Occurrence Painel
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              <Button
-                onClick={(event) => handleNavigate("/", event)}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                Home
-              </Button>
+            <Button
+              onClick={(event) => handleNavigate("/", event)}
+              sx={{ my: 2, color: 'white', display: 'block' }}
+            >
+              <Typography textAlign="center">Onu Board</Typography>
+            </Button>
+
+            <Button
+              onClick={(event) => handleNavigate("/heroes", event)}
+              sx={{ my: 2, color: 'white', display: 'block' }}
+            >
+              <Typography textAlign="center">Heroes</Typography>
+            </Button>
+
+            <Button
+              onClick={(event) => handleNavigate("/threats", event)}
+              sx={{ my: 2, color: 'white', display: 'block' }}
+            >
+              <Typography textAlign="center">Threats</Typography>
+            </Button>
           </Box>
 
           {sessionLinks}

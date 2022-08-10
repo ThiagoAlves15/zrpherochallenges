@@ -11,20 +11,20 @@ import {
   Input,
   InputLabel
 } from '@mui/material';
-import { resetErrorState } from './heroSlice';
+import { resetErrorState } from './threatSlice';
 
-function FormHero(props) {
+function FormThreat(props) {
   const nameRef = useRef();
-  const rankRef = useRef();
+  const tierRef = useRef();
   const latitudeRef = useRef();
   const longitudeRef = useRef();
 
-  const [name, setName] = useState(props.hero ? props.hero.name : '');
-  const [rank, setRank] = useState(props.hero ? props.hero.rank : '');
-  const [latitude, setLatitude] = useState(props.hero ? props.hero.latitude : '');
-  const [longitude, setLongitude] = useState(props.hero ? props.hero.longitude : '');
+  const [name, setName] = useState(props.threat ? props.threat.name : '');
+  const [tier, setTier] = useState(props.threat ? props.threat.tier : '');
+  const [latitude, setLatitude] = useState(props.threat ? props.threat.latitude : '');
+  const [longitude, setLongitude] = useState(props.threat ? props.threat.longitude : '');
 
-  const errorMessages = useSelector((state) => state.heroes.errorMessages);
+  const errorMessages = useSelector((state) => state.threats.errorMessages);
   const [errors, setErrors] = useState([]);
   const loading = false;
 
@@ -43,8 +43,8 @@ function FormHero(props) {
 
     if (nameRef?.current === undefined
         || nameRef.current.value === ""
-        || rankRef?.current === undefined
-        || rankRef.current.value === ""
+        || tierRef?.current === undefined
+        || tierRef.current.value === ""
         || latitudeRef?.current === undefined
         || latitudeRef.current.value === ""
         || longitudeRef?.current === undefined
@@ -53,12 +53,12 @@ function FormHero(props) {
       return setErrors(["Please fill out all fields"]);
     }
 
-    const id = props.hero ? props.hero.id : 0;
+    const id = props.threat ? props.threat.id : 0;
 
     const payload = {
       id: id,
       name: nameRef.current.value,
-      rank: rankRef.current.value,
+      tier: tierRef.current.value,
       latitude: latitudeRef.current.value,
       longitude: longitudeRef.current.value,
       accessToken: props.accessToken
@@ -99,15 +99,15 @@ function FormHero(props) {
                   </FormControl>
                 </FormGroup>
 
-                <FormGroup row={true} id="rank-group" sx={{marginTop: '1em'}}>
+                <FormGroup row={true} id="tier-group" sx={{marginTop: '1em'}}>
                   <FormControl fullWidth>
-                    <InputLabel required htmlFor="text" id="rank-label">{props.type} rank</InputLabel>
+                    <InputLabel required htmlFor="text" id="tier-label">{props.type} tier</InputLabel>
                     <Input
-                      id="rank"
+                      id="tier"
                       type="text"
-                      inputRef={rankRef}
-                      value={rank}
-                      onChange={(e) => setRank(e.target.value)}
+                      inputRef={tierRef}
+                      value={tier}
+                      onChange={(e) => setTier(e.target.value)}
                     />
                   </FormControl>
                 </FormGroup>
@@ -160,4 +160,4 @@ function FormHero(props) {
   );
 }
 
-export default FormHero;
+export default FormThreat;

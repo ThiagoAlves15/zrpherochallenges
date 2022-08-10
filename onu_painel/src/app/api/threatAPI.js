@@ -1,14 +1,14 @@
 import axios from './axios';
-import { HEROES_URL } from './consts';
+import { THREATS_URL } from './consts';
 
-export async function fetchAllHeroes(accessToken) {
+export async function fetchAllThreats(accessToken) {
   const config = {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
   };
 
-  return axios.get(HEROES_URL, config)
+  return axios.get(THREATS_URL, config)
     .then((response) => {
       return response.data;
     })
@@ -17,7 +17,7 @@ export async function fetchAllHeroes(accessToken) {
     });
 }
 
-export async function createNewHero(payload) {
+export async function createNewThreat(payload) {
   const config = {
     headers: {
       Authorization: `Bearer ${payload.accessToken}`,
@@ -26,12 +26,12 @@ export async function createNewHero(payload) {
 
   const data = {
     name: payload.name,
-    rank: payload.rank,
+    tier: payload.tier,
     latitude: payload.latitude,
     longitude: payload.longitude
   }
 
-  return axios.post(HEROES_URL, data, config)
+  return axios.post(THREATS_URL, data, config)
     .then((response) => {
       return response.data;
     })
@@ -40,7 +40,7 @@ export async function createNewHero(payload) {
     });
 }
 
-export async function updateHeroById(payload) {
+export async function updateThreatById(payload) {
   const config = {
     headers: {
       Authorization: `Bearer ${payload.accessToken}`,
@@ -49,12 +49,12 @@ export async function updateHeroById(payload) {
 
   const data = {
     name: payload.name,
-    rank: payload.rank,
+    tier: payload.tier,
     latitude: payload.latitude,
     longitude: payload.longitude
   }
 
-  const updateUrl = `${HEROES_URL}/${payload.id}`
+  const updateUrl = `${THREATS_URL}/${payload.id}`
 
   return axios.patch(updateUrl, data, config)
     .then((response) => {
@@ -65,14 +65,14 @@ export async function updateHeroById(payload) {
     });
 }
 
-export async function deleteHeroById(payload) {
+export async function deleteThreatById(payload) {
   const config = {
     headers: {
       Authorization: `Bearer ${payload.accessToken}`,
     },
   };
 
-  const deleteUrl = `${HEROES_URL}/${payload.id}`
+  const deleteUrl = `${THREATS_URL}/${payload.id}`
 
   return axios.delete(deleteUrl, config)
     .then((response) => {

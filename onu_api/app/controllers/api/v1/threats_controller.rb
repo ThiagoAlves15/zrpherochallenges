@@ -35,7 +35,13 @@ class Api::V1::ThreatsController < ApiController
 
   # DELETE /threats/1
   def destroy
-    @threat.destroy
+    if @threat.destroy
+      @threats = Threat.all
+
+      render json: @threats
+    else
+      render json: @threat.errors, status: :unprocessable_entity
+    end
   end
 
   private

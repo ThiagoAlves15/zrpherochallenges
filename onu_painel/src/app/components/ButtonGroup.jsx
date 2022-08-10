@@ -1,37 +1,35 @@
-import { deleteHero } from './heroSlice';
-import {
-  Button
-} from '@mui/material';
+import { Button } from '@mui/material';
 
 function ButtonGroup(props) {
 
-  function handleDelete(event) {
+  function handleDelete() {
     const payload = {
-      heroId: props.heroId,
+      id: props.id,
+      name: props.name,
       accessToken: props.accessToken
     }
 
-    props.dispatch(deleteHero(payload));
+    props.delete(payload);
   }
 
   return (
     <div>
       <Button
         variant="contained"
-        color="warning"
+        color="secondary"
         id="edit-button"
         onClick={() => props.toggleEditForm()}
       >
-        Edit hero
+        Edit {props.type}
       </Button>
 
       <Button
         variant="contained"
-        color="secondary"
+        color="warning"
         id="delete-button"
-        onClick={(e) => handleDelete(e)}
+        onClick={() => handleDelete()}
       >
-        Delete hero
+        Delete {props.type}
       </Button>
     </div>
   );
