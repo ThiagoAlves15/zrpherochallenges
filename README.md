@@ -6,3 +6,14 @@
 
 - cd onu_painel/
 - npm start
+
+TODO:
+ - Refatorar componentes (AppBar, Forms, Slices em especial);
+ - Resolução de ocorrências por timer;
+ - Polling de ocorrências fora do front-end;
+ - Diferentes níveis de acesso (Admin / User);
+ - (Maybe) paginizar respostas da API;
+ - Testes. Todos eles;
+ - Dockerizar;
+ - Pipeline de testes no Github;
+ - Subir no Heroku;
