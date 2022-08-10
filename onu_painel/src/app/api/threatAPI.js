@@ -17,6 +17,22 @@ export async function fetchAllThreats(accessToken) {
     });
 }
 
+export async function fetchUnresolvedThreats(accessToken) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+
+  return axios.get(UNRESOLVED_THREATS_URL, config)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      return error.response.data;
+    });
+}
+
 export async function createNewThreat(payload) {
   const config = {
     headers: {

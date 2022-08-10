@@ -8,6 +8,13 @@ class Api::V1::HeroesController < ApiController
     render json: @heroes
   end
 
+  # GET /available_heroes
+  def available_heroes
+    @heroes = Hero.available_heroes.all
+
+    render json: @heroes
+  end
+
   # GET /heroes/1
   def show
     render json: @hero

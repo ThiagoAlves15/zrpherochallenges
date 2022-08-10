@@ -5,7 +5,9 @@ export const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET;
 export const NEW_THREAT_URL = 'https://zrp-challenge-socket.herokuapp.com';
 
 export const HEROES_URL = '/heroes';
+export const AVAILABLE_HEROES_URL = '/available_heroes';
 export const THREATS_URL = '/threats';
+export const UNRESOLVED_THREATS_URL = '/unresolved_threats';
 export const OCCURRENCES_URL = '/occurrences';
 
 export const LOGIN_URL = '/oauth/token';

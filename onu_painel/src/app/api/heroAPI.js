@@ -17,6 +17,22 @@ export async function fetchAllHeroes(accessToken) {
     });
 }
 
+export async function fetchAvailableHeroes(accessToken) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+
+  return axios.get(AVAILABLE_HEROES_URL, config)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      return error.response.data;
+    });
+}
+
 export async function createNewHero(payload) {
   const config = {
     headers: {

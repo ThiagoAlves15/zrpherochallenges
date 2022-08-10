@@ -8,6 +8,13 @@ class Api::V1::ThreatsController < ApiController
     render json: @threats
   end
 
+  # GET /unresolved_threats
+  def unresolved_threats
+    @threats = Threat.unresolved_threats.all
+
+    render json: @threats
+  end
+
   # GET /threats/1
   def show
     render json: @threat

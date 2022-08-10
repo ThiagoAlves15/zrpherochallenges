@@ -8,6 +8,8 @@ namespace :api do
     resources :heroes
     resources :threats
     resources :occurrences
+    get '/available_heroes', to: 'heroes#available_heroes'
+    get '/unresolved_threats', to: 'threats#unresolved_threats'
 
     get '/users/me', to: 'users#me'
   end

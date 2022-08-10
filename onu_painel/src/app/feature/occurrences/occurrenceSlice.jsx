@@ -12,10 +12,22 @@ const initialState = {
       hero_id: 0,
       threat_id: 0,
       hero: {
-        id: 0
+        id: 0,
+        name: "",
+        rank: "",
+        latitude: "",
+        longitude: "",
+        created_at: "",
+        updated_at: ""
       },
       threat: {
-        id: 0
+        id: 0,
+        name: "",
+        tier: "",
+        latitude: "",
+        longitude: "",
+        created_at: "",
+        updated_at: ""
       }
     }
   ],
