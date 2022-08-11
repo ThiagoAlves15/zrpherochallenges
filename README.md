@@ -1,16 +1,16 @@
 - sudo -u postgres psql
 - sudo service postgresql start
 
-## With docker
+# With docker
 
-# Setup
+## Setup
 $ docker-compose run onu_painel yarn
 $ docker-compose run onu_api bin/rails db:create db:migrate db:seed
 
-# Start
+## Start
 $ docker-compose up -d
 
-## Without docker
+# Without docker
 - cd onu_api/
 - rails s
 
