@@ -1,0 +1,33 @@
+version: '3'
+services:
+  database:
+    container_name: postgres
+    image: postgres:14
+    volumes:
+      - ./tmp/database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+  onu_api:
+    container_name: onu_api
+    build: ./onu_api
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./onu_api:/zrpherochallenge/onu_api
+    depends_on:
+      - database
+  onu_painel:
+    container_name: onu_painel
+    image: "node:14-alpine"
+    working_dir: /zrpherochallenge/onu_painel
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./onu_painel:/zrpherochallenge/onu_painel
+      - ./node_modules:/zrpherochallenge/onu_painel/node_modules
+    command: "npm run start"
+    depends_on:
+      - onu_api

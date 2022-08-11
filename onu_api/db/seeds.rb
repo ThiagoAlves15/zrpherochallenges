@@ -7,7 +7,13 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 if Doorkeeper::Application.count.zero?
-  Doorkeeper::Application.create!(name: "onu_painel", redirect_uri: "http://localhost:3001", scopes: "public")
+  Doorkeeper::Application.create!(
+    name: "onu_painel",
+    redirect_uri: "http://localhost:3001",
+    scopes: "public",
+    secret: "O3qTSN6rmYt5X7PUUzvBsEsLu0w3xst_tSKVmlsgFF8",
+    uid: "wTSGEpGKMv8wLpT0Ipr_l2_hn_kG9TsPwgyYAQ916fw"
+  )
 end
 
 User.first_or_create(email: "onu_admin@onu.com.br", password: "baldhead", password_confirmation: "baldhead", role: User.roles[:admin])
