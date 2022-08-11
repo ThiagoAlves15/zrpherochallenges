@@ -1,6 +1,3 @@
-- sudo -u postgres psql
-- sudo service postgresql start
-
 # With docker
 
 ## Setup
